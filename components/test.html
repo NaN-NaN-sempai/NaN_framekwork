@@ -1,0 +1,49 @@
+<body>
+    <button>teste</button>
+    <button>teste2</button>
+    <button class="tete">teste3</button>
+</body>
+
+
+
+<script selector="button">
+</script>
+
+<script selector=".tete">
+    this.addEventListener("click", ()=>{ console.log(this.componentData.a); });
+
+</script>
+
+
+<style>
+    body {
+        background: red;
+    }
+
+    button {
+        background: green;
+    }
+    .mainContainer input, b  {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--mainColor);
+    width: 80%;
+    border-top: 15px solid var(--secondColor);
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 20px;
+}
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    color: var(--mainDark);
+    outline: none;
+    background: var(--b);
+}
+div, a {
+    display: block;
+}
+</style>
+
