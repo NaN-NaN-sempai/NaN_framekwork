@@ -1,0 +1,21 @@
+<body>
+    <button>click</button>
+</body>
+
+<script selector="button">
+    this.addEventListener("click", ()=>alert("nodep"))
+</script>
+
+<style>
+    button {
+        background: green;
+        color: white;
+        text-transform: uppercase;
+    }
+</style>
+
+<style global>
+    body {
+        background: black
+    }
+</style>

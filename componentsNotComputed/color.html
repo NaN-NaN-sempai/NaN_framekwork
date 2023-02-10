@@ -1,0 +1,231 @@
+<!-- not mobile -->
+<body device="not mobile">
+    <label for="te">
+        <h3>Component para PC</h3>
+        <p>Color: <span> </span></p>
+        <p class="hex">HEX: <span> </span></p>
+        <p class="rev">Reverse: <span> </span></p>
+        
+        <input type="Color" name="" id="te">
+    </label>
+</body>
+
+<script src="./scripts/nameThatColor.js"></script>
+
+<script async selector="body" device="not mobile">
+    var input = this.querySelector("input[type=color]");
+    var output = this.querySelector("p span");
+    var output2 = this.querySelector(".hex span");
+    var output3 = this.querySelector(".rev span"); 
+ 
+    this.querySelector("label").htmlFor = input.id = this.dataset.componentId;
+    
+    var setColor = ()=>{
+        var {name} = nameThatColor(input.value);
+        var invertedColor = invertColor(input.value);
+
+        this.componentSetOutputJson({name, hex: input.value});
+        
+        this.style.setProperty("--bgFrom", input.value);
+        this.style.setProperty("--bgTo", invertedColor);
+        
+        output.innerHTML = name;
+        output2.innerHTML = input.value;
+        output3.innerHTML = invertedColor;
+    }
+
+    input.addEventListener("input", setColor);
+
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    function invertColor(hex) {
+        if (hex.indexOf('#') === 0) {
+            hex = hex.slice(1);
+        }
+        
+        if (hex.length === 3) {
+            hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+        }
+        if (hex.length !== 6) {
+            throw new Error('Invalid HEX color.');
+        }
+        
+        var r = (255 - parseInt(hex.slice(0, 2), 16)).toString(16),
+            g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16),
+            b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
+            
+        function padZero(str, len) {
+            len = len || 2;
+            var zeros = new Array(len).join('0');
+            return (zeros + str).slice(-len);
+        }
+        return '#' + padZero(r) + padZero(g) + padZero(b);
+    }
+
+    input.value = this.componentGetSetupData();
+    setColor();
+</script>
+
+<style global>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    body {
+        background: black;
+        width: 100%;
+        overflow-x: hidden;
+    }
+</style>
+
+<style device="not mobile">
+    :root {
+        --b: green;
+    }
+    * {
+        font-family: sans-serif;
+    }
+    span {
+        user-select: all;
+        text-transform: uppercase;
+    }
+    span:hover {
+        background: var(--bgTo);
+        color: var(--bgFrom);
+    }
+    input[type=color] {
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        position: absolute;
+        padding: 0;
+        height: 0;
+        opacity: 0;
+        width: 100%;
+    }
+    body {
+        --bgFrom: black;
+        --bgTo: white;
+        background: linear-gradient(to bottom, var(--bgFrom) 50%, var(--bgTo));
+        color: var(--bgTo);
+        border: solid 5px var(--bgTo);
+        width: 200px;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+    }
+</style>
+
+
+
+
+<!-- mobile -->
+
+<body device="mobile">
+    <h3>Component para Mobile</h3>
+    <p> Carregando... </p>
+    <input type="Color" name="" id="">
+</body>
+
+<script device="mobile" selector="body">
+    var input = this.querySelector("input[type=color]");
+    var output = this.querySelector("p");
+
+    var setColor = ()=>{
+        var {name} = nameThatColor(input.value);
+        var invertedColor = invertColor(input.value);
+
+        this.componentSetData({name, hex: input.value});
+        
+        this.style.setProperty("--bgFrom", input.value);
+        this.style.setProperty("--bgTo", invertedColor);
+        
+        output.innerHTML = name;
+    }
+
+    input.addEventListener("input", setColor);
+
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    function invertColor(hex) {
+        if (hex.indexOf('#') === 0) {
+            hex = hex.slice(1);
+        }
+        
+        if (hex.length === 3) {
+            hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+        }
+        if (hex.length !== 6) {
+            throw new Error('Invalid HEX color.');
+        }
+        
+        var r = (255 - parseInt(hex.slice(0, 2), 16)).toString(16),
+            g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16),
+            b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
+            
+        function padZero(str, len) {
+            len = len || 2;
+            var zeros = new Array(len).join('0');
+            return (zeros + str).slice(-len);
+        }
+        return '#' + padZero(r) + padZero(g) + padZero(b);
+    }
+
+    input.value = this.componentGetSetupData();
+    setColor();
+</script>
+
+<style device="mobile">
+    
+    * {
+        font-family: consolas;
+        text-align: center;
+    }
+    p {
+        user-select: all;
+        text-transform: uppercase;
+    }
+    input[type=color] {
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        background: none;
+        outline: 5px solid var(--bgFrom);
+        outline-offset: -5px;
+        border: none;
+        overflow: hidden;
+        cursor: pointer;
+        padding: 0;
+        height: 100px;
+        width: 100%;
+    }
+    body {
+        --bgFrom: black;
+        --bgTo: white;
+        background: linear-gradient(to bottom, var(--bgFrom) 50%, var(--bgTo));
+        color: var(--bgTo);
+        border: solid 5px var(--bgTo);
+        width: 200px;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        border-radius: 50%;
+    }
+</style>

@@ -1,17 +1,18 @@
-var reloadModule = require("./myMods/reloadModule");
-
 var express = require("express");
 var app = express();
+app.use(express.json());
 
 var port = 80;
 
 app.use(express.json());
 
-app.get("*", (req, res)=>{
-    reloadModule("./router")(req, res, __dirname);
-});
+var router = require("./router");
 
-app.listen(port, () => {
+const reloadModule = require("./myModules/reloadModule");
+router(app, "./routeList", reloadModule);
+
+
+var server = app.listen(port, () => {
     console.log('\x1b[35m %s \x1b[0m', "\nExpress started.");
     var hostname = require('os').hostname();
     require('dns').lookup(hostname, function (err, add, fam) {

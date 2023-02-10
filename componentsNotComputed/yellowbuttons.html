@@ -1,0 +1,43 @@
+<body>
+    <button>teste</button>
+    <button>teste2</button>
+    <button class="tete">teste3</button>
+    <input type="text">
+</body>
+
+<script selector="body, input">
+    /* this.addEventListener("click", (e)=>{
+        console.log(this.tagName);
+    }) */
+</script>
+
+<script selector=".tete">
+    this.innerHTML = this.componentGetJson().a;
+
+    this.addEventListener("click", ()=>{  
+        this.componentSetDataJson({a: this.componentGetJson().a + 1});
+        this.componentElement.reload();
+    });
+
+</script>
+
+
+<style>
+    body {
+        background: cyan;
+    }
+body{
+        background: black;
+    }
+    button {
+        background: yellow;
+        border-radius: 20px;
+    }
+    button:hover {
+        background: red;
+    }
+
+
+
+</style>
+
